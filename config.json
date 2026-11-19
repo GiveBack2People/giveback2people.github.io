@@ -1,0 +1,14 @@
+{
+  "org": "GiveBack2People",
+  "exclude": ["giveback2people.github.io", ".github"],
+  "hideTopic": "hide-from-showcase",
+  "hideForks": true,
+  "hideArchived": true,
+  "pin": ["designresources"],
+  "sort": "stars",
+  "showTopics": false,
+  "minRepos": 1,
+  "links": [
+    { "label": "GitHub", "url": "https://github.com/GiveBack2People" }
+  ]
+}

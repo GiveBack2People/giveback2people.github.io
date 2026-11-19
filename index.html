@@ -4,253 +4,209 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <!-- Color scheme declaration -->
+  <title>Projects · GiveBack2People</title>
+  <meta name="description" content="Open-source tools, curated creative resources, and practical knowledge built to pay it forward.">
   <meta name="color-scheme" content="light dark">
-  
+
+  <!-- Open Graph / Social Meta -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Projects · GiveBack2People">
+  <meta property="og:description" content="Open-source tools, curated creative resources, and practical knowledge built to pay it forward.">
+  <meta property="og:url" content="https://giveback2people.github.io/">
+  <meta property="og:image" content="https://giveback2people.github.io/images/avatar-dark.png">
+  <meta name="twitter:card" content="summary">
+
+  <!-- Favicons and Web Manifest from Lift Brand Kit -->
+  <link rel="icon" href="./icons/favicon.ico" sizes="16x16 32x32 48x48">
+  <link rel="icon" href="./icons/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png">
+  <link rel="manifest" href="./icons/site.webmanifest">
+  <meta name="theme-color" content="#0F172A">
+
+  <link rel="stylesheet" href="./styles.css">
+
   <!-- FOUC prevention inline script -->
   <script>
-    try {
-      const savedTheme = localStorage.getItem("color-scheme");
-      if (savedTheme) {
-        document.querySelector('meta[name="color-scheme"]').content = savedTheme;
-      }
-    } catch (e) {}
-  </script>
-
-  <title>GiveBack2People — Open Source & Creative Resources</title>
-  <meta name="description" content="Open-source tools, curated creative resources, and practical knowledge built to pay it forward.">
-  
-  <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
-  <link rel="icon" type="image/svg+xml" href="assets/logo.svg">
-  <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-  <div class="layout">
-    <!-- Header -->
-    <header class="header">
-      <a href="#" class="brand">
-        <img src="assets/logo.svg" alt="GiveBack2People Logo" class="brand-icon" width="32" height="32">
-        <span>GiveBack2People</span>
-      </a>
-
-      <div class="header-links">
-        <a href="https://github.com/GiveBack2People" class="nav-link" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
-        <button id="theme-btn" class="theme-btn" type="button" aria-label="Toggle light or dark theme">
-          <svg class="icon-sun" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
-          </svg>
-          <svg class="icon-moon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-          </svg>
-          <span id="theme-label">Theme</span>
-        </button>
-      </div>
-    </header>
-
-    <!-- Intro -->
-    <main>
-      <section class="intro">
-        <h1 class="intro-title">GiveBack2People</h1>
-        <p class="intro-desc">
-          Open-source tools, curated creative resources, and practical knowledge built to pay it forward to creators and developers worldwide.
-        </p>
-      </section>
-
-      <!-- Projects Section -->
-      <section>
-        <div class="section-meta">
-          <span class="section-title" id="repo-count-label">Repositories</span>
-          <span class="sort-indicator">sorted by stars ↓</span>
-        </div>
-
-        <div id="repo-list" class="repo-list" aria-live="polite">
-          <!-- Loading skeleton -->
-          <div class="skeleton-card">
-            <div class="skeleton-line" style="width: 40%;"></div>
-            <div class="skeleton-line" style="width: 85%;"></div>
-            <div class="skeleton-line" style="width: 60%;"></div>
-          </div>
-        </div>
-      </section>
-    </main>
-
-    <!-- Footer -->
-    <footer class="footer">
-      <div>
-        &copy; <span id="current-year"></span> GiveBack2People • Released under <a href="https://opensource.org/licenses/MIT" target="_blank" rel="noopener noreferrer">MIT</a>
-      </div>
-      <div>
-        <a href="https://github.com/GiveBack2People" target="_blank" rel="noopener noreferrer">github.com/GiveBack2People</a>
-      </div>
-    </footer>
-  </div>
-
-  <script>
     (function () {
-      // Dynamic year
-      const yearEl = document.getElementById('current-year');
-      if (yearEl) yearEl.textContent = new Date().getFullYear();
+  const STORAGE_KEY = 'theme';
 
-      // Theme toggle
-      const metaColorScheme = document.querySelector('meta[name="color-scheme"]');
-      const themeBtn = document.getElementById('theme-btn');
+  function getSystemPreference() {
+    return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+      ? 'dark'
+      : 'light';
+  }
 
-      function getCurrentScheme() {
-        const stored = localStorage.getItem('color-scheme');
-        if (stored === 'light' || stored === 'dark') return stored;
-        return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-      }
+  function getActiveTheme() {
+    const stored = localStorage.getItem(STORAGE_KEY);
+    if (stored === 'light' || stored === 'dark') return stored;
+    return getSystemPreference();
+  }
 
-      function applyTheme(theme) {
-        if (theme === 'light' || theme === 'dark') {
-          metaColorScheme.content = theme;
-          localStorage.setItem('color-scheme', theme);
-        } else {
-          metaColorScheme.content = 'light dark';
-          localStorage.removeItem('color-scheme');
-        }
-      }
+  function applyTheme(theme, save) {
+    document.documentElement.setAttribute('data-theme', theme);
+    const meta = document.querySelector('meta[name="color-scheme"]');
+    if (meta) meta.content = theme;
 
-      if (themeBtn) {
-        themeBtn.addEventListener('click', () => {
-          const next = getCurrentScheme() === 'dark' ? 'light' : 'dark';
-          applyTheme(next);
-        });
-      }
+    if (save) {
+      localStorage.setItem(STORAGE_KEY, theme);
+    }
 
-      window.addEventListener('storage', (e) => {
-        if (e.key === 'color-scheme') {
-          metaColorScheme.content = e.newValue || 'light dark';
+    const btn = document.getElementById('theme-toggle');
+    if (btn) {
+      const nextTheme = theme === 'dark' ? 'light' : 'dark';
+      const label = `Switch to ${nextTheme} theme`;
+      btn.setAttribute('aria-label', label);
+      btn.setAttribute('title', label);
+    }
+  }
+
+  // Set initial theme early to prevent FOUC
+  const initialTheme = getActiveTheme();
+  document.documentElement.setAttribute('data-theme', initialTheme);
+
+  // Setup interactive handlers once DOM is ready
+  function initToggle() {
+    const btn = document.getElementById('theme-toggle');
+    if (!btn) return;
+
+    applyTheme(getActiveTheme(), false);
+
+    btn.addEventListener('click', function () {
+      const current = getActiveTheme();
+      const next = current === 'dark' ? 'light' : 'dark';
+      applyTheme(next, true);
+    });
+
+    // Listen for OS scheme changes if user hasn't explicitly chosen
+    if (window.matchMedia) {
+      window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function (e) {
+        if (!localStorage.getItem(STORAGE_KEY)) {
+          applyTheme(e.matches ? 'dark' : 'light', false);
         }
       });
+    }
 
-      // Auto-sync repositories from GitHub API
-      const ORG_NAME = 'GiveBack2People';
-      const CACHE_KEY = `gh_repos_${ORG_NAME}`;
-      const CACHE_TTL = 10 * 60 * 1000; // 10 minutes cache
-      const container = document.getElementById('repo-list');
-      const countLabel = document.getElementById('repo-count-label');
-
-      function renderRepos(repos) {
-        if (!repos || repos.length === 0) {
-          container.innerHTML = `
-            <div class="empty-state">
-              No public repositories found. Check back soon or visit <a href="https://github.com/${ORG_NAME}" target="_blank" rel="noopener noreferrer">GitHub</a>.
-            </div>`;
-          return;
-        }
-
-        countLabel.textContent = `Repositories (${repos.length})`;
-
-        container.innerHTML = repos.map(repo => {
-          const hasHomepage = repo.homepage && repo.homepage.trim() !== '';
-          const primaryLink = hasHomepage ? repo.homepage : repo.html_url;
-          const stars = repo.stargazers_count || 0;
-          const description = repo.description || 'No description provided.';
-          const topics = Array.isArray(repo.topics) ? repo.topics.slice(0, 5) : [];
-
-          return `
-            <article class="repo-card">
-              <div class="repo-top">
-                <div class="repo-title-group">
-                  <a href="${primaryLink}" class="repo-name" target="_blank" rel="noopener noreferrer">${repo.name}</a>
-                  ${hasHomepage ? `
-                    <a href="${repo.homepage}" class="live-pill" target="_blank" rel="noopener noreferrer" title="View live documentation/site">
-                      ● Live Site ↗
-                    </a>` : ''}
-                </div>
-                <div class="stars-count" title="${stars} GitHub Stars">
-                  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                    <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
-                  </svg>
-                  <span>${stars}</span>
-                </div>
-              </div>
-
-              <p class="repo-desc">${escapeHtml(description)}</p>
-
-              <div class="repo-bottom">
-                <div class="repo-tags">
-                  ${repo.language ? `<span class="tag" style="font-weight:600;">${escapeHtml(repo.language)}</span>` : ''}
-                  ${topics.map(t => `<span class="tag">${escapeHtml(t)}</span>`).join('')}
-                </div>
-
-                <div class="repo-links">
-                  ${hasHomepage ? `<a href="${repo.homepage}" class="action-link" target="_blank" rel="noopener noreferrer">Live Site ↗</a>` : ''}
-                  <a href="${repo.html_url}" class="action-link" target="_blank" rel="noopener noreferrer">Source ↗</a>
-                </div>
-              </div>
-            </article>
-          `;
-        }).join('');
+    // Sync across tabs
+    window.addEventListener('storage', function (e) {
+      if (e.key === STORAGE_KEY && (e.newValue === 'light' || e.newValue === 'dark')) {
+        applyTheme(e.newValue, false);
       }
+    });
+  }
 
-      function escapeHtml(str) {
-        if (!str) return '';
-        return str
-          .replace(/&/g, '&amp;')
-          .replace(/</g, '&lt;')
-          .replace(/>/g, '&gt;')
-          .replace(/"/g, '&quot;')
-          .replace(/'/g, '&#039;');
-      }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initToggle);
+  } else {
+    initToggle();
+  }
+})();
 
-      function fetchRepositories() {
-        // Try sessionStorage cache first
-        try {
-          const cached = sessionStorage.getItem(CACHE_KEY);
-          if (cached) {
-            const parsed = JSON.parse(cached);
-            if (Date.now() - parsed.timestamp < CACHE_TTL) {
-              renderRepos(parsed.data);
-              return;
-            }
-          }
-        } catch (e) {}
-
-        // Fetch fresh data from GitHub REST API
-        fetch(`https://api.github.com/orgs/${ORG_NAME}/repos?per_page=100`)
-          .then(res => {
-            if (!res.ok) throw new Error(`HTTP error ${res.status}`);
-            return res.json();
-          })
-          .then(data => {
-            // Filter out internal repos (.github and the github.io root site)
-            const filtered = data.filter(r => {
-              const name = r.name.toLowerCase();
-              return name !== '.github' && name !== `${ORG_NAME.toLowerCase()}.github.io`;
-            });
-
-            // Sort by stars descending (user preference)
-            filtered.sort((a, b) => {
-              const starsDiff = (b.stargazers_count || 0) - (a.stargazers_count || 0);
-              if (starsDiff !== 0) return starsDiff;
-              return new Date(b.pushed_at) - new Date(a.pushed_at);
-            });
-
-            // Cache in sessionStorage
-            try {
-              sessionStorage.setItem(CACHE_KEY, JSON.stringify({
-                timestamp: Date.now(),
-                data: filtered
-              }));
-            } catch (e) {}
-
-            renderRepos(filtered);
-          })
-          .catch(err => {
-            console.error('Failed to fetch repositories:', err);
-            // Fallback rendering
-            container.innerHTML = `
-              <div class="empty-state">
-                <p>Could not dynamically load projects. View them directly on GitHub:</p>
-                <p style="margin-top:0.5rem;"><a href="https://github.com/${ORG_NAME}" target="_blank" rel="noopener noreferrer" class="action-link">github.com/${ORG_NAME} ↗</a></p>
-              </div>`;
-          });
-      }
-
-      fetchRepositories();
-    })();
   </script>
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Skip to projects</a>
+
+  <div class="container">
+    <!-- Left Identity Rail -->
+    <header class="identity-rail">
+      <div class="rail-top-bar">
+        <a href="./" class="brand-link" aria-label="GiveBack2People Home">
+          <img src="./images/horizontal-color-light.svg" class="brand-logo logo-light" alt="GiveBack2People" width="200" height="62">
+          <img src="./images/horizontal-color-dark.svg" class="brand-logo logo-dark" alt="" aria-hidden="true" width="200" height="62">
+        </a>
+        <div class="rail-footer">
+          <button id="theme-toggle" class="theme-toggle-btn" type="button" aria-label="Switch to dark theme">
+            <!-- Sun Icon (Shown in Dark Theme) -->
+            <svg class="theme-icon-sun" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+            </svg>
+            <!-- Moon Icon (Shown in Light Theme) -->
+            <svg class="theme-icon-moon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <p class="rail-tagline">Open knowledge. Shared forward.</p>
+      
+      <p class="rail-blurb">Open-source tools, curated creative resources, and practical knowledge built to pay it forward.</p>
+
+      <ul class="rail-links">
+        <li>
+          <a href="https://github.com/GiveBack2People" class="rail-link" target="_blank" rel="noopener noreferrer">
+            <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+              <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
+            </svg>
+            <span>GitHub organization ↗</span>
+          </a>
+        </li>
+      </ul>
+    </header>
+
+    <!-- Main Content -->
+    <main id="main-content" class="main-content">
+      <header class="main-header">
+        <h1 class="main-title">Projects</h1>
+        <p class="main-subtitle">Open-source work from the GiveBack2People community. <span class="project-count">1 project</span></p>
+      </header>
+
+      <ul class="project-grid" aria-label="Open-source projects">
+        
+      <li class="project-grid-item">
+        <article class="project-card">
+          <div class="card-top">
+            <div class="card-title-group">
+              <svg class="repo-glyph" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+                <path d="M2 2.5A2.5 2.5 0 0 1 4.5 0h8.75a.75.75 0 0 1 .75.75v12.5a.75.75 0 0 1-.75.75h-2.5a.75.75 0 0 0 0 1.5h2.5a2.25 2.25 0 0 0 2.25-2.25V.75A2.25 2.25 0 0 0 13.25 0H4.5a4 4 0 0 0-4 4v10.5A1.5 1.5 0 0 0 2 16h11.25a.75.75 0 0 0 0-1.5H2a.5.5 0 0 1-.5-.5V4A2.5 2.5 0 0 1 2 2.5Z"/>
+              </svg>
+              <h2 class="card-title">
+                <a href="https://github.com/GiveBack2People/designresources" class="card-title-link">designresources</a>
+              </h2>
+            </div>
+            <span class="featured-badge"><span class="featured-dot" aria-hidden="true"></span>Featured</span>
+          </div>
+
+          <p class="card-desc">Explore our Graphic Design Resources Collection, a collaborative effort to support designers, developers, and creatives alike. Find all kinds of resources to elevate your projects. Happy creating! 🎨✨</p>
+
+          <div class="card-meta">
+            
+
+            
+              <span class="meta-stat" title="30 stars">
+                <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+                  <path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.751.751 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25Z"/>
+                </svg>
+                <span>30</span>
+              </span>
+
+            
+              <span class="meta-stat" title="13 forks">
+                <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+                  <path d="M5 5.372v.878c0 .414.336.75.75.75h4.5a.75.75 0 0 0 .75-.75v-.878a2.25 2.25 0 1 0-1.5 0v.128a.25.25 0 0 1-.25.25h-3a.25.25 0 0 1-.25-.25v-.128a2.25 2.25 0 1 0-1.5 0ZM3.25 3a.75.75 0 1 1 1.5 0 .75.75 0 0 1-1.5 0Zm8 0a.75.75 0 1 1 1.5 0 .75.75 0 0 1-1.5 0ZM8 10.128V8.25a2.25 2.25 0 0 0-1.5-2.122v-.256a1.75 1.75 0 0 1 1.5 1.728v2.5a2.25 2.25 0 1 0 1.5 0v-2.5A1.75 1.75 0 0 1 11 5.872v.256A2.25 2.25 0 0 0 9.5 8.25v1.878a2.25 2.25 0 1 0-1.5 0ZM8 13.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5Z"/>
+                </svg>
+                <span>13</span>
+              </span>
+
+            
+              <a href="https://giveback2people.github.io/designresources/" class="card-website-link" target="_blank" rel="noopener noreferrer">
+                Website ↗
+              </a>
+          </div>
+
+          
+            <div class="card-topics">
+              <span class="topic-pill">3d-design</span><span class="topic-pill">awesome-list</span><span class="topic-pill">design</span>
+            </div>
+        </article>
+      </li>
+    
+      </ul>
+
+      <footer class="site-footer">
+        <p>Updated 19 Nov 2026 · <a href="https://github.com/GiveBack2People/giveback2people.github.io" target="_blank" rel="noopener noreferrer">Source on GitHub</a></p>
+      </footer>
+    </main>
+  </div>
 </body>
 </html>

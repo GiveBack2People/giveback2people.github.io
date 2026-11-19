@@ -1,0 +1,22 @@
+[
+  {
+    "name": "designresources",
+    "description": "Explore our Graphic Design Resources Collection, a collaborative effort to support designers, developers, and creatives alike. Find all kinds of resources to elevate your projects. Happy creating! 🎨✨",
+    "html_url": "https://github.com/GiveBack2People/designresources",
+    "homepage": "https://giveback2people.github.io/designresources/",
+    "language": "Vue",
+    "stargazers_count": 30,
+    "forks_count": 0,
+    "topics": [
+      "design-resources",
+      "design-tools",
+      "awesome-list",
+      "ui-ux",
+      "vitepress"
+    ],
+    "archived": false,
+    "fork": false,
+    "private": false,
+    "pushed_at": "2026-11-19T03:21:10Z"
+  }
+]
