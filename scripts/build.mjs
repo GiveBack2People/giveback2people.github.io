@@ -175,7 +175,7 @@ async function build() {
             <h2 class="card-title">
               <a href="${escapeHtml(repo.html_url)}" class="card-title-link">${escapeHtml(repo.name)}</a>
             </h2>
-            ${isPinned ? '<span class="featured-badge"><span class="featured-dot" aria-hidden="true"></span>Featured</span>' : ''}
+            ${isPinned ? '<span class="pinned-tag">Pinned</span>' : ''}
           </div>
 
           ${repo.description ? `<p class="card-desc">${escapeHtml(repo.description)}</p>` : ''}

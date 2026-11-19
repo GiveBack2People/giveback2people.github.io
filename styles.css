@@ -8,7 +8,6 @@
   --text-muted: #475569;
   --link: #4F46E5;
   --accent: #6366F1;
-  --highlight: #06B6D4;
   color-scheme: light dark;
 }
 
@@ -22,7 +21,6 @@
     --text-muted: #94A3B8;
     --link: #818CF8;
     --accent: #6366F1;
-    --highlight: #06B6D4;
   }
 }
 
@@ -35,7 +33,6 @@
   --text-muted: #94A3B8;
   --link: #818CF8;
   --accent: #6366F1;
-  --highlight: #06B6D4;
 }
 
 :root[data-theme="light"] {
@@ -47,7 +44,6 @@
   --text-muted: #475569;
   --link: #4F46E5;
   --accent: #6366F1;
-  --highlight: #06B6D4;
 }
 
 /* Reset & Base */
@@ -91,28 +87,22 @@ body {
   top: 16px;
 }
 
-/* Container: Centered at 1440px and beyond */
-.container {
-  max-width: 1200px;
-  width: 100%;
-  margin: 0 auto;
-  padding: 56px 32px;
-  display: flex;
-  align-items: flex-start;
-  gap: 56px;
-  flex: 1;
+/* Top Header Bar */
+.site-header {
+  border-bottom: 1px solid var(--border);
+  background-color: var(--surface);
+  position: sticky;
+  top: 0;
+  z-index: 100;
 }
 
-/* Identity Rail */
-.identity-rail {
-  width: 280px;
-  flex-shrink: 0;
-  position: sticky;
-  top: 56px;
-  padding-right: 36px;
-  border-right: 1px solid var(--border);
+.header-inner {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 16px 24px;
   display: flex;
-  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
   gap: 16px;
 }
 
@@ -123,7 +113,7 @@ body {
 }
 
 .brand-logo {
-  width: 200px;
+  width: 175px;
   height: auto;
   aspect-ratio: 820 / 256;
   display: block;
@@ -143,43 +133,28 @@ body {
 :root[data-theme="light"] .logo-light { display: block; }
 :root[data-theme="light"] .logo-dark { display: none; }
 
-.rail-tagline {
-  font-size: 14px;
-  line-height: 22px;
-  font-weight: 600;
-  color: var(--text);
-}
-
-.rail-blurb {
-  font-size: 14px;
-  line-height: 22px;
-  font-weight: 400;
-  color: var(--text-muted);
-}
-
-.rail-actions {
+.header-actions {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  margin-top: 8px;
+  gap: 16px;
 }
 
-.rail-link {
+.header-link {
   font-size: 14px;
-  line-height: 22px;
+  line-height: 20px;
   color: var(--link);
   text-decoration: none;
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  width: fit-content;
+  gap: 6px;
+  font-weight: 500;
 }
 
-.rail-link:hover {
+.header-link:hover {
   text-decoration: underline;
 }
 
-.rail-link svg {
+.header-link svg {
   width: 16px;
   height: 16px;
   flex-shrink: 0;
@@ -236,40 +211,56 @@ body {
 :root[data-theme="light"] .theme-icon-sun { display: none !important; }
 :root[data-theme="light"] .theme-icon-moon { display: block !important; }
 
-/* Update metadata in rail */
-.rail-update-meta {
-  font-size: 12px;
-  line-height: 16px;
-  color: var(--text-muted);
-  margin-top: 12px;
-  padding-top: 16px;
-  border-top: 1px solid var(--border);
-}
-
-/* Main Showcase Column */
-.main-content {
+/* Main Content Area */
+.site-main {
   flex: 1;
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
+  max-width: 900px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 48px 24px 64px;
 }
 
-.main-header {
-  margin-bottom: 28px;
+/* Minimal Intro */
+.intro {
+  margin-bottom: 40px;
 }
 
-.main-title {
-  font-size: 28px;
-  line-height: 36px;
+.intro-title {
+  font-size: 26px;
+  line-height: 34px;
   font-weight: 600;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.015em;
   color: var(--text);
-  margin-bottom: 6px;
+  margin-bottom: 8px;
 }
 
-.main-subtitle {
-  font-size: 14px;
-  line-height: 22px;
+.intro-desc {
+  font-size: 15px;
+  line-height: 24px;
+  color: var(--text-muted);
+  max-width: 640px;
+}
+
+/* Projects Section Header */
+.projects-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 18px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+}
+
+.projects-title {
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.projects-count {
+  font-size: 13px;
   color: var(--text-muted);
 }
 
@@ -344,23 +335,18 @@ body {
   outline-offset: 2px;
 }
 
-/* Featured Badge */
-.featured-badge {
+/* Neutral Monochrome Pinned Tag (No Green Dot) */
+.pinned-tag {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
   font-size: 12px;
   line-height: 16px;
   font-weight: 500;
   color: var(--text-muted);
+  border: 1px solid var(--border);
+  padding: 2px 8px;
+  border-radius: 9999px;
   flex-shrink: 0;
-}
-
-.featured-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background-color: var(--highlight);
 }
 
 /* Card Description */
@@ -458,51 +444,60 @@ body {
   color: var(--text-muted);
 }
 
-/* Responsive Breakpoints */
-@media (max-width: 1023px) {
-  .container {
-    flex-direction: column;
-    padding: 36px 24px;
-    gap: 36px;
-  }
-
-  .identity-rail {
-    width: 100%;
-    position: static;
-    padding-right: 0;
-    border-right: none;
-    border-bottom: 1px solid var(--border);
-    padding-bottom: 24px;
-  }
-
-  .rail-top-bar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-  }
-
-  .rail-actions {
-    margin-top: 4px;
-  }
-
-  .project-card {
-    padding: 20px;
-  }
+/* Bottom Footer */
+.site-footer {
+  border-top: 1px solid var(--border);
+  background-color: var(--surface);
+  margin-top: auto;
 }
 
+.footer-inner {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.footer-inner a {
+  color: inherit;
+  text-decoration: underline;
+}
+
+.footer-inner a:hover {
+  color: var(--text);
+}
+
+/* Responsive Breakpoints */
 @media (max-width: 639px) {
-  .container {
-    padding: 24px 16px;
-    gap: 24px;
+  .header-inner {
+    padding: 14px 16px;
   }
 
   .brand-logo {
-    width: 180px;
+    width: 150px;
+  }
+
+  .site-main {
+    padding: 32px 16px 48px;
+  }
+
+  .intro {
+    margin-bottom: 32px;
+  }
+
+  .intro-title {
+    font-size: 22px;
+    line-height: 30px;
   }
 
   .project-card {
-    padding: 16px 18px;
+    padding: 18px 20px;
     gap: 10px;
   }
 
@@ -522,7 +517,13 @@ body {
     min-height: 44px;
   }
 
-  .rail-link {
+  .header-link {
     min-height: 44px;
+  }
+
+  .footer-inner {
+    padding: 20px 16px;
+    flex-direction: column;
+    align-items: flex-start;
   }
 }

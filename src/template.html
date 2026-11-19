@@ -36,26 +36,20 @@
 <body>
   <a href="#main-content" class="skip-link">Skip to projects</a>
 
-  <div class="container">
-    <!-- Left Identity Rail -->
-    <header class="identity-rail">
-      <div class="rail-top-bar">
-        <a href="./" class="brand-link" aria-label="GiveBack2People Home">
-          <img src="./images/horizontal-color-light.svg" class="brand-logo logo-light" alt="GiveBack2People" width="200" height="62">
-          <img src="./images/horizontal-color-dark.svg" class="brand-logo logo-dark" alt="" aria-hidden="true" width="200" height="62">
-        </a>
-      </div>
+  <!-- Top Header Bar -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="./" class="brand-link" aria-label="GiveBack2People Home">
+        <img src="./images/horizontal-color-light.svg" class="brand-logo logo-light" alt="GiveBack2People" width="175" height="54">
+        <img src="./images/horizontal-color-dark.svg" class="brand-logo logo-dark" alt="" aria-hidden="true" width="175" height="54">
+      </a>
 
-      <p class="rail-tagline">Open knowledge. Shared forward.</p>
-      
-      <p class="rail-blurb">Open-source tools, curated creative resources, and practical knowledge built to pay it forward.</p>
-
-      <div class="rail-actions">
-        <a href="https://github.com/GiveBack2People" class="rail-link" target="_blank" rel="noopener noreferrer">
+      <div class="header-actions">
+        <a href="https://github.com/GiveBack2People" class="header-link" target="_blank" rel="noopener noreferrer">
           <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
             <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
           </svg>
-          <span>GitHub organization ↗</span>
+          <span>GitHub ↗</span>
         </a>
 
         <button id="theme-toggle" class="theme-toggle-btn" type="button" aria-label="Switch to dark theme">
@@ -69,23 +63,43 @@
           </svg>
         </button>
       </div>
+    </div>
+  </header>
 
-      <div class="rail-update-meta">
-        Updated <!-- BUILD_DATE -->
+  <!-- Main Content Area -->
+  <main id="main-content" class="site-main">
+    <section class="intro">
+      <h1 class="intro-title">GiveBack2People</h1>
+      <p class="intro-desc">Open-source tools, curated creative resources, and practical knowledge built to pay it forward to creators and developers worldwide.</p>
+    </section>
+
+    <section aria-labelledby="projects-heading">
+      <div class="projects-header">
+        <h2 id="projects-heading" class="projects-title">Projects</h2>
+        <span class="projects-count"><!-- REPO_COUNT --></span>
       </div>
-    </header>
-
-    <!-- Main Content -->
-    <main id="main-content" class="main-content">
-      <header class="main-header">
-        <h1 class="main-title">Projects</h1>
-        <p class="main-subtitle">Open-source work from the GiveBack2People community. <span class="project-count"><!-- REPO_COUNT --></span></p>
-      </header>
 
       <ul class="project-list" aria-label="Open-source projects">
         <!-- REPO_CARDS -->
       </ul>
-    </main>
-  </div>
+    </section>
+  </main>
+
+  <!-- Bottom Footer -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div>
+        &copy; <span id="current-year"></span> GiveBack2People • Released under <a href="https://opensource.org/licenses/MIT" target="_blank" rel="noopener noreferrer">MIT</a>
+      </div>
+      <div>
+        Updated <!-- BUILD_DATE -->
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const y = document.getElementById('current-year');
+    if (y) y.textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
