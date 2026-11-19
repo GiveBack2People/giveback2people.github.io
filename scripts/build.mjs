@@ -169,44 +169,41 @@ async function build() {
     const forks = repo.forks_count || 0;
 
     return `
-      <li class="project-grid-item">
+      <li class="project-list-item">
         <article class="project-card">
           <div class="card-top">
-            <div class="card-title-group">
-              <svg class="repo-glyph" width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
-                <path d="M2 2.5A2.5 2.5 0 0 1 4.5 0h8.75a.75.75 0 0 1 .75.75v12.5a.75.75 0 0 1-.75.75h-2.5a.75.75 0 0 0 0 1.5h2.5a2.25 2.25 0 0 0 2.25-2.25V.75A2.25 2.25 0 0 0 13.25 0H4.5a4 4 0 0 0-4 4v10.5A1.5 1.5 0 0 0 2 16h11.25a.75.75 0 0 0 0-1.5H2a.5.5 0 0 1-.5-.5V4A2.5 2.5 0 0 1 2 2.5Z"/>
-              </svg>
-              <h2 class="card-title">
-                <a href="${escapeHtml(repo.html_url)}" class="card-title-link">${escapeHtml(repo.name)}</a>
-              </h2>
-            </div>
+            <h2 class="card-title">
+              <a href="${escapeHtml(repo.html_url)}" class="card-title-link">${escapeHtml(repo.name)}</a>
+            </h2>
             ${isPinned ? '<span class="featured-badge"><span class="featured-dot" aria-hidden="true"></span>Featured</span>' : ''}
           </div>
 
           ${repo.description ? `<p class="card-desc">${escapeHtml(repo.description)}</p>` : ''}
 
           <div class="card-meta">
-            ${repo.language ? `
-              <span class="meta-lang">
-                <span class="lang-dot" aria-hidden="true"></span>
-                <span>${escapeHtml(repo.language)}</span>
-              </span>` : ''}
+            <div class="meta-left">
+              ${repo.language ? `
+                <span class="meta-lang">
+                  <span class="lang-dot" aria-hidden="true"></span>
+                  <span>${escapeHtml(repo.language)}</span>
+                </span>` : ''}
 
-            ${stars > 0 ? `
-              <span class="meta-stat" title="${stars} stars">
-                <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
-                  <path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.751.751 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25Z"/>
-                </svg>
-                <span>${formatNumber(stars)}</span>
-              </span>` : ''}
+              ${stars > 0 ? `
+                <span class="meta-stat" title="${stars} stars">
+                  <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+                    <path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.751.751 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25Z"/>
+                  </svg>
+                  <span>${formatNumber(stars)}</span>
+                </span>` : ''}
 
-            ${forks > 0 ? `
-              <span class="meta-stat" title="${forks} forks">
-                <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
-                  <path d="M5 5.372v.878c0 .414.336.75.75.75h4.5a.75.75 0 0 0 .75-.75v-.878a2.25 2.25 0 1 0-1.5 0v.128a.25.25 0 0 1-.25.25h-3a.25.25 0 0 1-.25-.25v-.128a2.25 2.25 0 1 0-1.5 0ZM3.25 3a.75.75 0 1 1 1.5 0 .75.75 0 0 1-1.5 0Zm8 0a.75.75 0 1 1 1.5 0 .75.75 0 0 1-1.5 0ZM8 10.128V8.25a2.25 2.25 0 0 0-1.5-2.122v-.256a1.75 1.75 0 0 1 1.5 1.728v2.5a2.25 2.25 0 1 0 1.5 0v-2.5A1.75 1.75 0 0 1 11 5.872v.256A2.25 2.25 0 0 0 9.5 8.25v1.878a2.25 2.25 0 1 0-1.5 0ZM8 13.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5Z"/>
-                </svg>
-                <span>${formatNumber(forks)}</span>
-              </span>` : ''}
+              ${forks > 0 ? `
+                <span class="meta-stat" title="${forks} forks">
+                  <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+                    <path d="M5 5.372v.878c0 .414.336.75.75.75h4.5a.75.75 0 0 0 .75-.75v-.878a2.25 2.25 0 1 0-1.5 0v.128a.25.25 0 0 1-.25.25h-3a.25.25 0 0 1-.25-.25v-.128a2.25 2.25 0 1 0-1.5 0ZM3.25 3a.75.75 0 1 1 1.5 0 .75.75 0 0 1-1.5 0Zm8 0a.75.75 0 1 1 1.5 0 .75.75 0 0 1-1.5 0ZM8 10.128V8.25a2.25 2.25 0 0 0-1.5-2.122v-.256a1.75 1.75 0 0 1 1.5 1.728v2.5a2.25 2.25 0 1 0 1.5 0v-2.5A1.75 1.75 0 0 1 11 5.872v.256A2.25 2.25 0 0 0 9.5 8.25v1.878a2.25 2.25 0 1 0-1.5 0ZM8 13.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5Z"/>
+                  </svg>
+                  <span>${formatNumber(forks)}</span>
+                </span>` : ''}
+            </div>
 
             ${validHomepage ? `
               <a href="${escapeHtml(validHomepage)}" class="card-website-link" target="_blank" rel="noopener noreferrer">
